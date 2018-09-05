@@ -27,6 +27,7 @@ pushd `dirname $0` &>/dev/null
 MY_DIR=$(pwd)
 popd &>/dev/null
 retry="$MY_DIR/../../buildfarm/utils/retry.py -s 1 -r 3"
+cert_replacer="$MY_DIR/../replace-updater-certs.py"
 
 runmode=0
 config_file="updates.cfg"
@@ -205,6 +206,12 @@ do
                 break
             fi
         done
+
+        if [ ! -z $cert_replacements ]; then
+            echo "Replacing certs in updater binary"
+            cp "${updater}" "${updater}.orig"
+            python "${cert_replacer}" "${MY_DIR}/../mar_certs" "${updater}.orig" "${updater}" ${cert_replacements}
+        fi
 
         if [ "$updater" == "null" ]; then
             echo "Couldn't find updater binary"
