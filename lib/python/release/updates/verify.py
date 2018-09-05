@@ -13,7 +13,7 @@ class UpdateVerifyConfig(object):
                        "channel", "patch_types", "from", "aus_server",
                        "ftp_server_from", "ftp_server_to", "to",
                        "mar_channel_IDs", "to_build_id", "to_display_version",
-                       "to_app_version", "updater_package")
+                       "to_app_version", "updater_package", "cert_replacements")
     global_keys = ("product", "channel", "aus_server", "to", "to_build_id",
                    "to_display_version", "to_app_version")
     release_keys = ("release", "build_id", "locales", "patch_types", "from",
@@ -109,7 +109,8 @@ class UpdateVerifyConfig(object):
     def addRelease(self, release=None, build_id=None, locales=[],
                    patch_types=['complete'], from_path=None,
                    ftp_server_from=None, ftp_server_to=None,
-                   mar_channel_IDs=None, platform=None, updater_package=None):
+                   mar_channel_IDs=None, platform=None, updater_package=None,
+                   cert_replacements=None):
         """Locales and patch_types can be passed as either a string or a list.
            If a string is passed, they will be converted to a list for internal
            storage"""
@@ -128,6 +129,7 @@ class UpdateVerifyConfig(object):
             "ftp_server_from": ftp_server_from,
             "ftp_server_to": ftp_server_to,
             "mar_channel_IDs": mar_channel_IDs,
+            "cert_replacements": cert_replacements,
             "platform": platform,
             "updater_package": updater_package,
         })
@@ -179,6 +181,7 @@ class UpdateVerifyConfig(object):
                                      ftp_server_to=r["ftp_server_to"],
                                      patch_types=r["patch_types"], from_path=from_path,
                                      mar_channel_IDs=r["mar_channel_IDs"],
+                                     cert_replacements=["cert_replacements"],
                                      platform=r["platform"],
                                      updater_package=r["updater_package"])
             except UpdateVerifyError:
