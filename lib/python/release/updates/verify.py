@@ -15,17 +15,18 @@ class UpdateVerifyConfig(object):
                        "mar_channel_IDs", "to_build_id", "to_display_version",
                        "to_app_version", "updater_package", "cert_replacements")
     global_keys = ("product", "channel", "aus_server", "to", "to_build_id",
-                   "to_display_version", "to_app_version")
+                   "to_display_version", "to_app_version", "cert_replacements")
     release_keys = ("release", "build_id", "locales", "patch_types", "from",
                     "ftp_server_from", "ftp_server_to", "mar_channel_IDs",
                     "platform", "updater_package")
     first_only_keys = ("from", "aus_server", "to", "to_build_id",
-                       "to_display_version", "to_app_version")
+                       "to_display_version", "to_app_version", "cert_replacements")
     compare_attrs = global_keys + ("releases",)
 
     def __init__(self, product=None, channel=None,
                  aus_server=None, to=None, to_build_id=None,
-                 to_display_version=None, to_app_version=None):
+                 to_display_version=None, to_app_version=None,
+                 cert_replacements=None):
         self.product = product
         self.channel = channel
         self.aus_server = aus_server
@@ -33,6 +34,7 @@ class UpdateVerifyConfig(object):
         self.to_build_id = to_build_id
         self.to_display_version = to_display_version
         self.to_app_version = to_app_version
+        self.cert_replacements = cert_replacements
         self.releases = []
 
     def __eq__(self, other):
@@ -109,8 +111,7 @@ class UpdateVerifyConfig(object):
     def addRelease(self, release=None, build_id=None, locales=[],
                    patch_types=['complete'], from_path=None,
                    ftp_server_from=None, ftp_server_to=None,
-                   mar_channel_IDs=None, platform=None, updater_package=None,
-                   cert_replacements=None):
+                   mar_channel_IDs=None, platform=None, updater_package=None):
         """Locales and patch_types can be passed as either a string or a list.
            If a string is passed, they will be converted to a list for internal
            storage"""
@@ -129,7 +130,6 @@ class UpdateVerifyConfig(object):
             "ftp_server_from": ftp_server_from,
             "ftp_server_to": ftp_server_to,
             "mar_channel_IDs": mar_channel_IDs,
-            "cert_replacements": cert_replacements,
             "platform": platform,
             "updater_package": updater_package,
         })
@@ -169,7 +169,8 @@ class UpdateVerifyConfig(object):
                                        self.aus_server, self.to,
                                        self.to_build_id,
                                        self.to_display_version,
-                                       self.to_app_version)
+                                       self.to_app_version,
+                                       self.cert_replacements)
         for t in allTests:
             build_id, locale, from_path = t
             if from_path == "None":
@@ -181,7 +182,6 @@ class UpdateVerifyConfig(object):
                                      ftp_server_to=r["ftp_server_to"],
                                      patch_types=r["patch_types"], from_path=from_path,
                                      mar_channel_IDs=r["mar_channel_IDs"],
-                                     cert_replacements=["cert_replacements"],
                                      platform=r["platform"],
                                      updater_package=r["updater_package"])
             except UpdateVerifyError:
