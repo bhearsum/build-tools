@@ -112,7 +112,7 @@ do
   use_old_updater=0
   mar_channel_IDs=""
   updater_package=""
-  override_cert=""
+  override_certs=""
   eval $entry
 
   # the arguments for updater changed in Gecko 34/SeaMonkey 2.31
@@ -212,10 +212,10 @@ do
             fi
         done
 
-        if [ ! -z "$override_cert" ]; then
+        if [ ! -z "$override_certs" ]; then
             echo "Replacing certs in updater binary"
             cp "${updater}" "${updater}.orig"
-            case ${override_cert} in
+            case ${override_certs} in
               dep)
                 overrides=${dep_overrides}
                 ;;
