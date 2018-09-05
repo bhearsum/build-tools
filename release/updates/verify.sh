@@ -207,7 +207,7 @@ do
             fi
         done
 
-        if [ ! -z $cert_replacements ]; then
+        if [ ! -z "$cert_replacements" ]; then
             echo "Replacing certs in updater binary"
             cp "${updater}" "${updater}.orig"
             python "${cert_replacer}" "${MY_DIR}/../mar_certs" "${updater}.orig" "${updater}" ${cert_replacements}
