@@ -14,10 +14,14 @@ if (len(cert_pairs) % 2) != 0:
     sys.exit(1)
 
 for find_cert, replace_cert in zip(*[iter(cert_pairs)]*2):
-    print("Replacing {} with {}".format(find_cert, replace_cert))
     find = open(os.path.join(cert_dir, find_cert), "rb").read()
     replace = open(os.path.join(cert_dir, replace_cert), "rb").read()
-    new_updater = new_updater.replace(find, replace)
+    print("Looking for {}...".format(find_cert))
+    if find in new_updater:
+        print("Replacing {} with {}".format(find_cert, replace_cert))
+        new_updater = new_updater.replace(find, replace)
+    else:
+        print("Didn't find {}...".format(find_cert))
 
 if len(updater_data) != len(new_updater):
     print("WARNING: new updater is not the same length as the old one (old: {}, new: {})".format(len(updater_data), len(new_updater)))

@@ -29,6 +29,10 @@ popd &>/dev/null
 retry="$MY_DIR/../../buildfarm/utils/retry.py -s 1 -r 3"
 cert_replacer="$MY_DIR/../replace-updater-certs.py"
 
+dep_overrides="nightly_aurora_level3_primary.der dep1.der nightly_aurora_level3_secondary.der dep2.der release_primary.der dep1.der release_secondary.der dep2.der"
+nightly_overrides="dep1.der nightly_aurora_level3_primary.der dep2.der nightly_aurora_level3_secondary.der release_primary.der nightly_aurora_level3_primary.der release_secondary.der nightly_aurora_level3_secondary.der"
+release_overrides="dep1.der release_primary.der dep2.der release_secondary.der nightly_aurora_level3_primary.der release_primary.der nightly_aurora_level3_secondary.der release_secondary.der"
+
 runmode=0
 config_file="updates.cfg"
 UPDATE_ONLY=1
@@ -108,6 +112,7 @@ do
   use_old_updater=0
   mar_channel_IDs=""
   updater_package=""
+  override_cert=""
   eval $entry
 
   # the arguments for updater changed in Gecko 34/SeaMonkey 2.31
@@ -207,10 +212,24 @@ do
             fi
         done
 
-        if [ ! -z "$cert_replacements" ]; then
+        if [ ! -z "$override_cert" ]; then
             echo "Replacing certs in updater binary"
             cp "${updater}" "${updater}.orig"
-            python "${cert_replacer}" "${MY_DIR}/../mar_certs" "${updater}.orig" "${updater}" ${cert_replacements}
+            case ${override_cert} in
+              dep)
+                overrides=${dep_overrides}
+                ;;
+              nightly)
+                overrides=${nightly_overrides}
+                ;;
+              release)
+                overrides=${release_overrides}
+                ;;
+              *)
+                echo "Unknown override cert - skipping"
+                ;;
+            esac
+            python "${cert_replacer}" "${MY_DIR}/../mar_certs" "${updater}.orig" "${updater}" ${overrides}
         fi
 
         if [ "$updater" == "null" ]; then
