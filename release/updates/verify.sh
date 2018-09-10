@@ -17,6 +17,7 @@ to=""
 to_build_id=""
 to_app_version=""
 to_display_version=""
+override_certs=""
 diff_summary_log="$PWD/diff-summary.log"
 if [ -e ${diff_summary_log} ]; then
   rm ${diff_summary_log}
@@ -112,7 +113,6 @@ do
   use_old_updater=0
   mar_channel_IDs=""
   updater_package=""
-  override_certs=""
   eval $entry
 
   # the arguments for updater changed in Gecko 34/SeaMonkey 2.31
@@ -230,6 +230,8 @@ do
                 ;;
             esac
             python "${cert_replacer}" "${MY_DIR}/../mar_certs" "${updater}.orig" "${updater}" ${overrides}
+        else
+            echo "override_certs is '${override_certs}', not replacing any certificates"
         fi
 
         if [ "$updater" == "null" ]; then
