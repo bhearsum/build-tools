@@ -179,6 +179,7 @@ do
             updater_platform="mac"
             if [ "${override_certs}" == "dep" ]; then
               updater_bins="${updater_bins} updater-dep"
+              platform_dirname="updater-dep"
             fi
             ;;
           *exe)
@@ -188,6 +189,7 @@ do
             updater_platform="win32"
             if [ "${override_certs}" == "dep" ]; then
               updater_bins="${updater_bins} updater-dep.exe"
+              platform_dirname="updater-dep"
             fi
             ;;
           *z*)
@@ -197,6 +199,7 @@ do
             updater_platform="linux"
             if [ "${override_certs}" == "dep" ]; then
               updater_bins="${updater_bins} updater-dep"
+              platform_dirname="updater-dep"
             fi
             ;;
           *)
