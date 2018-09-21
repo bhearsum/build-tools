@@ -169,7 +169,8 @@ do
         fi
 
         updater_platform=""
-        updater_package_url=`echo "${ftp_server_from}${updater_package}" | sed "s/%locale%/${locale}/"`
+        #updater_package_url=`echo "${ftp_server_from}${updater_package}" | sed "s/%locale%/${locale}/"`
+        updater_package_url="${updater_package}"
         updater_package_filename=`basename "$updater_package_url"`
         case $updater_package_filename in
           *dmg)
