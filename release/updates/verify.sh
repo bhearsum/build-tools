@@ -176,18 +176,27 @@ do
             platform_dirname="*.app"
             updater_bins="Contents/MacOS/updater.app/Contents/MacOS/updater Contents/MacOS/updater.app/Contents/MacOS/org.mozilla.updater"
             updater_platform="mac"
+            if [ "${override_certs}" == "dep" ]; then
+              updater_bins="${updater_bins} updater-dep"
+            fi
             ;;
           *exe)
             updater_package_url=`echo "${updater_package_url}" | sed "s/ja-JP-mac/ja/"`
             platform_dirname="bin"
             updater_bins="updater.exe"
             updater_platform="win32"
+            if [ "${override_certs}" == "dep" ]; then
+              updater_bins="${updater_bins} updater-dep.exe"
+            fi
             ;;
           *bz2)
             updater_package_url=`echo "${updater_package_url}" | sed "s/ja-JP-mac/ja/"`
             platform_dirname=`echo $product | tr '[A-Z]' '[a-z]'`
             updater_bins="updater"
             updater_platform="linux"
+            if [ "${override_certs}" == "dep" ]; then
+              updater_bins="${updater_bins} updater-dep"
+            fi
             ;;
           *)
             echo "Couldn't detect updater platform"
