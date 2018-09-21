@@ -190,7 +190,7 @@ do
               updater_bins="${updater_bins} updater-dep.exe"
             fi
             ;;
-          *bz2)
+          *z*)
             updater_package_url=`echo "${updater_package_url}" | sed "s/ja-JP-mac/ja/"`
             platform_dirname=`echo $product | tr '[A-Z]' '[a-z]'`
             updater_bins="updater"
