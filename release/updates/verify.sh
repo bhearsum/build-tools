@@ -192,7 +192,7 @@ do
               platform_dirname="updater-dep"
             fi
             ;;
-          *z*)
+          *bz2|*gz)
             updater_package_url=`echo "${updater_package_url}" | sed "s/ja-JP-mac/ja/"`
             platform_dirname=`echo $product | tr '[A-Z]' '[a-z]'`
             updater_bins="updater"
